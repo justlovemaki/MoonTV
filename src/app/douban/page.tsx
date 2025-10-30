@@ -120,7 +120,7 @@ function DoubanPageClient() {
   }, [type, customCategories]);
 
   // 生成骨架屏数据
-  const skeletonData = Array.from({ length: 25 }, (_, index) => index);
+  const skeletonData = Array.from({ length: 20 }, (_, index) => index);
 
   // 生成API请求参数的辅助函数
   const getRequestParams = useCallback(
@@ -131,7 +131,7 @@ function DoubanPageClient() {
           kind: 'tv' as const,
           category: type,
           type: secondarySelection,
-          pageLimit: 25,
+          pageLimit: 20,
           pageStart,
         };
       }
@@ -141,7 +141,7 @@ function DoubanPageClient() {
         kind: type as 'tv' | 'movie',
         category: primarySelection,
         type: secondarySelection,
-        pageLimit: 25,
+        pageLimit: 20,
         pageStart,
       };
     },
@@ -165,7 +165,7 @@ function DoubanPageClient() {
           data = await getDoubanList({
             tag: selectedCategory.query,
             type: selectedCategory.type,
-            pageLimit: 25,
+            pageLimit: 20,
             pageStart: 0,
           });
         } else {
@@ -177,7 +177,7 @@ function DoubanPageClient() {
 
       if (data.code === 200) {
         setDoubanData(data.list);
-        setHasMore(data.list.length === 25);
+        setHasMore(data.list.length === 20);
         setLoading(false);
       } else {
         throw new Error(data.message || '获取数据失败');
@@ -250,21 +250,21 @@ function DoubanPageClient() {
               data = await getDoubanList({
                 tag: selectedCategory.query,
                 type: selectedCategory.type,
-                pageLimit: 25,
-                pageStart: currentPage * 25,
+                pageLimit: 20,
+                pageStart: currentPage * 20,
               });
             } else {
               throw new Error('没有找到对应的分类');
             }
           } else {
             data = await getDoubanCategories(
-              getRequestParams(currentPage * 25)
+              getRequestParams(currentPage * 20)
             );
           }
 
           if (data.code === 200) {
             setDoubanData((prev) => [...prev, ...data.list]);
-            setHasMore(data.list.length === 25);
+            setHasMore(data.list.length === 20);
           } else {
             throw new Error(data.message || '获取数据失败');
           }
